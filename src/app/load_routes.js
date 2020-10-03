@@ -2,22 +2,31 @@ const fs = require('fs');
 const path = require('path');
 
 const directoryPath = path.join('src/', 'routes');
-let fileNames = [];
+let paths = [];
 
-const readDirectory = (directoryPath) => {
-    fs.readdir(directoryPath, (err, files) => {
-        if (err)  return console.log('Unable to scan directory: ' + err); 
+const readDirectory = async (directoryPath) => {
+    const filePaths = await fs.readdir(directoryPath, async (err, files) => {
+        if (err) return console.log('Unable to scan directory: ' + err); 
 
-        files.forEach((file) => {
-            const filePath = getPath(directoryPath, file);
-            if(isDirectoryName(filePath)) {
-                readDirectory(filePath);
-            }else{
-                fileNames.push(filePath);
-            }
-            
-        });
+        paths = await paths.concat(iterateFiles(files));
+        console.log(paths)
+        return paths;
     });
+    console.log(filePaths)
+    return filePaths;
+}
+
+const iterateFiles = (files) => {
+    const fileNames = [];
+    files.forEach(async (file) => {
+        const filePath = getPath(directoryPath, file);
+        if(isDirectoryName(filePath)) {
+            await readDirectory(filePath);
+        }else{
+            fileNames.push(filePath);
+        }
+    });
+    return fileNames
 }
 
 const isDirectoryName = (filePath) => {
@@ -33,5 +42,5 @@ const getPath = (directoryPath, name) => {
 }
 
 readDirectory(directoryPath);
+
 isDirectoryName(directoryPath, 'user');
-console.log("FILES", fileNames)
