@@ -3,22 +3,21 @@ const path = require('path');
 
 const directoryPath = path.join('src/', 'routes');
 let paths = [];
+let props = {}
 
 const readDirectory = async (directoryPath) => {
-    const filePaths = await fs.readdir(directoryPath, async (err, files) => {
-        if (err) return console.log('Unable to scan directory: ' + err); 
+    await fs.readdir(directoryPath, (err, files) => {
+        if (err) console.log('Unable to scan directory: ' + err); 
 
-        paths = await paths.concat(iterateFiles(files));
-        console.log(paths)
-        return paths;
+        paths = paths.concat(iterateFiles(files));
+        setProp(paths)
     });
-    console.log(filePaths)
-    return filePaths;
 }
 
 const iterateFiles = (files) => {
     const fileNames = [];
     files.forEach(async (file) => {
+
         const filePath = getPath(directoryPath, file);
         if(isDirectoryName(filePath)) {
             await readDirectory(filePath);
@@ -26,7 +25,7 @@ const iterateFiles = (files) => {
             fileNames.push(filePath);
         }
     });
-    return fileNames
+    return fileNames;
 }
 
 const isDirectoryName = (filePath) => {
@@ -41,6 +40,17 @@ const getPath = (directoryPath, name) => {
     return path.join(directoryPath, name);
 }
 
-readDirectory(directoryPath);
+const setProp = (prop) => {
+    props.routes = prop;
+}
 
-isDirectoryName(directoryPath, 'user');
+const exec = async () => {
+    await readDirectory(directoryPath);
+    setTimeout(() => {
+        //console.log("---------->",props)
+    }, 10)
+    return props;
+}
+
+module.exports = exec();
+
