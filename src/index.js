@@ -1,3 +1,4 @@
+const connection = require('../database/mongo/connection/connection');
 const app = require('./app/');
 const port = 1133;
 
