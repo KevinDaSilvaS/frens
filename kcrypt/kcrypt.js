@@ -1,18 +1,18 @@
 const ascii = require('./ascii');
 
-const krypt = (data) => {
+const krypt = (data, end) => {
     let finalText = '';
 
     const message = data.split('');
-    message.map(char => finalText += encrypt(char))
+    message.map(char => finalText += encrypt(char, end))
 
     return finalText;
 }
 
-const unkrypt = (data) => {
+const unkrypt = (data, end) => {
     let finalText = '';
 
-    const message = data.split('<-->');
+    const message = data.split(end);
     message.map(char => {
         if (decrypt(char)) finalText += decrypt(char)
     })
@@ -20,7 +20,7 @@ const unkrypt = (data) => {
     return finalText;
 }
 
-const encrypt = (char) => {
+const encrypt = (char, end) => {
     let final = '';
     let searchCharCode = ascii[char] + 3;
 
@@ -30,7 +30,7 @@ const encrypt = (char) => {
 
         final += codeToChar(getCode(searchCharCode));
     }
-    final += '-'
+    final += end
     return final;
 }
 

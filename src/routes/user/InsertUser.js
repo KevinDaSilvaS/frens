@@ -15,7 +15,7 @@ const execute = (app) => {
 
         //payload
         const {email} = req.body;
-        const userCode = krypt(email);
+        const userCode = krypt(email, '-');
         const user = { ...req.body, userCode };
 
         //save
