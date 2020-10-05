@@ -1,7 +1,14 @@
 const {headers} = require('../../schemas/auth/authSchema');
 
 const validate = (req) => {
-    if(req.headers.login_token) //do validations
+    const token = req.headers.login_token;
+    const result = headers.validate(token);
+    
+    if(result.error) return {
+        error: result.error
+    };
+
+    //do validations
 
     return true;
 }
