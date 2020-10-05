@@ -2,9 +2,17 @@ const {schemaPatch} = require('../../schemas/user/userSchema');
 const validateToken = require('../auth/validateLoginToken');
 
 const validate = (req) => {
-    validateToken(req);
+    const result = schemaPatch.validate(req.body);
+    if(result.error){
+        return {
+            error: result.error
+        };
+    }
 
-    return true;
+    const tokenValidation = validateToken(req);
+    if(tokenValidation) return true;
+    
+    return tokenValidation;
 }
 
 module.exports = validate;
