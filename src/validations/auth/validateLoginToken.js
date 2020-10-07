@@ -1,10 +1,12 @@
 const {headers} = require('../../schemas/auth/authSchema');
+const ResponseExpress = require('../../helpers/ResponseExpress');
+const Status = require('../../helpers/Status');
 
-const validate = (req) => {
-    const result = headers.validate(req.headers);
+const validate = (data) => {
+    const result = headers.validate(data.headers);
     
-    if(result.error) return {
-        error: result.error
+    if(result.error) {
+        ResponseExpress(data.res, Status.NOT_AUTHORIZED, result.error.details);
     };
 
     //do validations
