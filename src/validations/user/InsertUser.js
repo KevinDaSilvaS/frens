@@ -8,10 +8,8 @@ const validate = (data) => {
         ResponseExpress(data.res, Status.BAD_REQUEST, result.error.details);
         return false;
     }
-
-    if(tokenValidation) return true;
     
-    return tokenValidation;
+    return true;
 }
 
 module.exports = validate;

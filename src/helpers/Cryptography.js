@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
-const { krypt } = require('../../kcrypt/kcrypt');
+const { v4: uuidv4 } = require('uuid');
 
-const generateUserCode = (data) => {
-    return krypt(data, '-');
+const generateUserCode = () => {
+    return uuidv4();
 }
 
 const encryptData = async (data) => {
