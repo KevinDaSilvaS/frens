@@ -10,9 +10,8 @@ const execute = async (data) => {
     validateLoginToken(data);
 
     try {
-        //const {userCode, email, password, name} = await OperationsUser.insert(data.useData);
-        const savedUser = await OperationsUser.insert(data.useData);
-        savedUser._id = undefined;
+        const {userCode, email, password, name} = await OperationsUser.insert(data.useData);
+        const savedUser = {userCode, email, password, name};
         ResponseExpress(data.res, Status.CREATED, savedUser);
 
     } catch (error) {
