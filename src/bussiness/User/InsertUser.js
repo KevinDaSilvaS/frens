@@ -15,7 +15,7 @@ const execute = async (data) => {
         ResponseExpress(data.res, Status.CREATED, savedUser);
 
     } catch (error) {
-        ResponseExpress(data.res, Status.INTERNAL_SERVER_ERROR, 'Unable to insert user.');
+        ResponseExpress(data.res, Status.INTERNAL_SERVER_ERROR, `Unable to insert user. Error: ${error}`);
     }
 }
 
