@@ -15,7 +15,9 @@ OperationBase.getOne = async (query) => {
 }
 
 OperationBase.update = async (query, replace) => {
-    return await User.updateMany(query, replace);
+    const updatedUser = await User.updateMany(query, replace);
+    if(updatedUser.ok > 0) return true;
+    return false;
 }
 
 module.exports = OperationBase;

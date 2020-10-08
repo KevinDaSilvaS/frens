@@ -1,18 +1,15 @@
 const {schemaPatch} = require('../../schemas/user/userSchema');
-const validateToken = require('../auth/validateLoginToken');
+const ResponseExpress = require('../../helpers/ResponseExpress');
+const Status = require('../../helpers/Status');
 
-const validate = (req) => {
-    const result = schemaPatch.validate(req.body);
+const validate = (data) => {
+    const result = schemaPatch.validate(data.body);
     if(result.error){
-        return {
-            error: result.error
-        };
+        ResponseExpress(data.res, Status.BAD_REQUEST, result.error.details);
+        return false;
     }
 
-    const tokenValidation = validateToken(req);
-    if(tokenValidation) return true;
-    
-    return tokenValidation;
+    return true;
 }
 
 module.exports = validate;

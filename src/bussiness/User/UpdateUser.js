@@ -1,4 +1,5 @@
 const OperationsUser = require('../../operations/user/OperationsUser');
+const validateUpdateUser = require('../../validations/user/UpdateUser');
 const validateLoginToken = require('../../validations/auth/validateLoginToken');
 const validateTokenParams = require('../../validations/auth/validateTokenParams');
 const ResponseExpress = require('../../helpers/ResponseExpress');
@@ -7,18 +8,18 @@ const Status = require('../../helpers/Status');
 const execute = async (data) => {
 
     validateLoginToken(data);
-    await validateTokenParams(data);
-    const {userCode} = data.params;
+    validateTokenParams(data);
+    validateUpdateUser(data);
 
     try {
-        const user = await OperationsUser.getOne({userCode});
+        const updatedUser = await OperationsUser.update(
+            data.params, data.useData);
 
-        if(!user) return ResponseExpress(res, Status.NOT_FOUND, 
-            'Unable find user.');
-        
-        ResponseExpress(data.res, Status.OK, {name: user.name});
+        if(updatedUser) ResponseExpress(data.res, Status.OK, {});
+
     } catch (error) {
-        ResponseExpress(data.res, Status.INTERNAL_SERVER_ERROR, error);
+        ResponseExpress(data.res, Status.INTERNAL_SERVER_ERROR, 
+            `Unable to update user. Error: ${error}`);
     }
 }
 
