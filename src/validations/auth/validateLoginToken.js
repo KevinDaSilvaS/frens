@@ -10,7 +10,6 @@ const validate = (data) => {
     
     if(result.error) {
         ResponseExpress(data.res, Status.NOT_AUTHORIZED, result.error.details);
-        return false;
     };
 
     const {login_token} = data.headers;
@@ -24,7 +23,8 @@ const validate = (data) => {
                 'Token expired. Make sure you are logged in.');
         }
     } catch (error) {
-        ResponseExpress(data.res, Status.NOT_AUTHORIZED, 'Token invalid.');
+        ResponseExpress(data.res, Status.INTERNAL_SERVER_ERROR, 
+            'Token invalid.');
     }
 
     return true;
