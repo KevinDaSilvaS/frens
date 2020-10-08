@@ -1,13 +1,11 @@
 const OperationsUser = require('../../operations/user/OperationsUser');
 const validateInsertUser = require('../../validations/user/InsertUser');
-const validateLoginToken = require('../../validations/auth/validateLoginToken');
 const ResponseExpress = require('../../helpers/ResponseExpress');
 const Status = require('../../helpers/Status');
 
 const execute = async (data) => {
 
     validateInsertUser(data);
-    validateLoginToken(data);
 
     try {
         const {userCode, email, password, name} = await OperationsUser.insert(data.useData);
