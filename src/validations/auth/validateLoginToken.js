@@ -8,9 +8,8 @@ const day = 86400000;
 const validate = (data) => {
     const result = headers.validate(data.headers);
     
-    if(result.error) {
-        ResponseExpress(data.res, Status.NOT_AUTHORIZED, result.error.details);
-    };
+    if(result.error) ResponseExpress(data.res, Status.NOT_AUTHORIZED, 
+        result.error.details);
 
     const {login_token} = data.headers;
 
@@ -18,7 +17,7 @@ const validate = (data) => {
         const splitted = login_token.split('#!#');
         const limit = parseInt(splitted[2]) + day;
 
-        if(splitted.length < 3 || date > limit){
+        if(splitted.length < 3 || date > limit) {
             ResponseExpress(data.res, Status.NOT_AUTHORIZED, 
                 'Token expired. Make sure you are logged in.');
         }
