@@ -4,8 +4,7 @@ const bussinessInsertUser = require('../../bussiness/User/InsertUser');
 const execute = (app) => {
     return app.post('/users/', async (req, res) => {
         const { email, password, name } = req.body;
-
-        const date = new Date().getMilliseconds();
+        
         const user = {};
         user.userCode = Cryptography.generateUserCode();
         user.email = await Cryptography.encryptData(email);
