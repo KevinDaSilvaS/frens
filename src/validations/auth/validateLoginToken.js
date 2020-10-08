@@ -20,7 +20,8 @@ const validate = (data) => {
         const limit = parseInt(splitted[2]) + day;
 
         if(splitted.length < 3 || date > limit){
-            ResponseExpress(data.res, Status.NOT_AUTHORIZED, 'Token expired. Make sure you are logged in.');
+            ResponseExpress(data.res, Status.NOT_AUTHORIZED, 
+                'Token expired. Make sure you are logged in.');
         }
     } catch (error) {
         ResponseExpress(data.res, Status.NOT_AUTHORIZED, 'Token invalid.');
