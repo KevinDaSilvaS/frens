@@ -3,14 +3,14 @@ const bussinessInsertUser = require('../../bussiness/User/InsertUser');
 
 const execute = (app) => {
     return app.post('/users/', async (req, res) => {
-        const { email, password } = req.body;
+        const { email, password, name } = req.body;
 
         const date = new Date().getMilliseconds();
         const user = {};
-        user.userCode = Cryptography.generateUserCode(email + date);
+        user.userCode = Cryptography.generateUserCode();
         user.email = await Cryptography.encryptData(email);
         user.password = await Cryptography.encryptData(password);
-        user.name = req.body.name;
+        user.name = name;
 
         const data = {body: req.body, headers: req.headers, res, useData: user};
         return bussinessInsertUser(data);
