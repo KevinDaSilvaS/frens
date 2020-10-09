@@ -10,12 +10,12 @@ const execute = async (data) => {
         await validateTokenParams(data);
         const {userCode} = data.params;
 
-        const user = await OperationsUser.getOne({userCode});
+        const {name} = await OperationsUser.getOne({userCode});
 
-        if(!user) return ResponseExpress(res, Status.NOT_FOUND, 
+        if(!name) return ResponseExpress(res, Status.NOT_FOUND, 
             'Unable find user.');
         
-        ResponseExpress(data.res, Status.OK, {name: user.name});
+        ResponseExpress(data.res, Status.OK, {name, userCode});
     } catch (error) {
         ResponseExpress(data.res, Status.INTERNAL_SERVER_ERROR, error);
     }
