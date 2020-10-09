@@ -13,12 +13,12 @@ const validate = async (data) => {
         const user = await OperationsUser.getOne({_id: splitted[0]});
 
         if(user.userCode != userCode || splitted[1] != userCode){
-            ResponseExpress(data.res, Status.NOT_AUTHORIZED, 
+            return ResponseExpress(data.res, Status.NOT_AUTHORIZED, 
                 'Token invalid or params UserCode invalid.');
         }
         
     } catch (error) {
-        ResponseExpress(data.res, Status.INTERNAL_SERVER_ERROR, 
+        return ResponseExpress(data.res, Status.INTERNAL_SERVER_ERROR, 
             'Token invalid.');
     }
 
