@@ -14,7 +14,7 @@ const validate = async (data) => {
 
         if(user.userCode != userCode || splitted[1] != userCode){
             ResponseExpress(data.res, Status.NOT_AUTHORIZED, 
-                'Token invalid.');
+                'Token invalid or params UserCode invalid.');
         }
         
     } catch (error) {
