@@ -5,11 +5,10 @@ const execute = (app) => {
     return app.post('/users/', async (req, res) => {
         const { email, password, name } = req.body;
 
-        const user = {};
+        const user = Object.assign({}, req.body);;
         user.userCode = Cryptography.generateUserCode();
         user.email = await Cryptography.encryptData(email);
         user.password = await Cryptography.encryptData(password);
-        user.name = name;
 
         const data = {body: req.body, res, useData: user};
         return bussinessInsertUser(data);
