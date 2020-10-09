@@ -4,10 +4,9 @@ const ResponseExpress = require('../../helpers/ResponseExpress');
 const Status = require('../../helpers/Status');
 
 const execute = async (data) => {
-
-    validateInsertUser(data);
-
     try {
+        validateInsertUser(data);
+
         const {userCode, email, password, name} = await OperationsUser.insert(data.useData);
         const savedUser = {userCode, email, password, name};
         ResponseExpress(data.res, Status.CREATED, savedUser);

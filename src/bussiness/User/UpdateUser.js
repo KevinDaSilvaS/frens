@@ -6,12 +6,11 @@ const ResponseExpress = require('../../helpers/ResponseExpress');
 const Status = require('../../helpers/Status');
 
 const execute = async (data) => {
-
-    validateLoginToken(data);
-    validateTokenParams(data);
-    validateUpdateUser(data);
-
     try {
+        validateLoginToken(data);
+        await validateTokenParams(data);
+        validateUpdateUser(data);
+
         const updatedUser = await OperationsUser.update(
             data.params, data.useData);
 

@@ -5,12 +5,11 @@ const ResponseExpress = require('../../helpers/ResponseExpress');
 const Status = require('../../helpers/Status');
 
 const execute = async (data) => {
-
-    validateLoginToken(data);
-    await validateTokenParams(data);
-    const {userCode} = data.params;
-
     try {
+        validateLoginToken(data);
+        await validateTokenParams(data);
+        const {userCode} = data.params;
+
         const user = await OperationsUser.getOne({userCode});
 
         if(!user) return ResponseExpress(res, Status.NOT_FOUND, 
