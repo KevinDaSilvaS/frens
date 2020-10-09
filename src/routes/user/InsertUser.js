@@ -3,7 +3,7 @@ const bussinessInsertUser = require('../../bussiness/User/InsertUser');
 
 const execute = (app) => {
     return app.post('/users/', async (req, res) => {
-        const { email, password, name } = req.body;
+        const { email, password } = req.body;
 
         const user = Object.assign({}, req.body);;
         user.userCode = Cryptography.generateUserCode();
