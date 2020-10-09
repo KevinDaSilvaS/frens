@@ -1,7 +1,10 @@
 # frens
 Login - CRUD microservice in nodejs
 
-```node src/
+```
+//to start
+  node src/
+ //for documentation
   cd documentation
   npx serve
 ```
